@@ -1,0 +1,8 @@
+{
+  "name": "Nhonguista Internacional",
+  "description": "Marketplace online de Moçambique estilo Alibaba para comprar e vender produtos com pagamento na entrega e M-Pesa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

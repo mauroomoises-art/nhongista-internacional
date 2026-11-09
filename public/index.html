@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NHONGUISTA INTERNACIONAL - Marketplace de Moçambique</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #FF6600;
+      --primary-hover: #E55C00;
+      --primary-light: #FFF0E6;
+      --secondary: #1E1E1E;
+      --bg: #F4F5F7;
+      --card-bg: #FFFFFF;
+      --text: #1E1E1E;
+      --text-muted: #6B7280;
+      --border: #E5E7EB;
+      --green: #10B981;
+      --red: #EF4444;
+      --yellow: #F59E0B;
+    }
+
+    [data-theme="green"] {
+      --primary: #059669;
+      --primary-hover: #047857;
+      --primary-light: #ECFDF5;
+    }
+    [data-theme="purple"] {
+      --primary: #8B5CF6;
+      --primary-hover: #7C3AED;
+      --primary-light: #F5F3FF;
+    }
+    [data-theme="ocean"] {
+      --primary: #0284C7;
+      --primary-hover: #0369A1;
+      --primary-light: #F0F9FF;
+    }
+    [data-theme="dark"] {
+      --bg: #121212;
+      --card-bg: #1E1E1E;
+      --text: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --border: #374151;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; transition: background 0.3s, color 0.3s; padding-bottom: 70px; }
+
+    /* TOP BAR */
+    .top-bar {
+      background: #111827;
+      color: #9CA3AF;
+      font-size: 11px;
+      padding: 6px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1F2937;
+    }
+    .live-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #10B981;
+      font-weight: 700;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #10B981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10B981;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .top-links { display: flex; gap: 14px; }
+    .top-links a { color: #D1D5DB; text-decoration: none; font-weight: 500; cursor: pointer; }
+    .top-links a.highlight { color: var(--primary); font-weight: 700; }
+
+    /* HEADER */
+    header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .header-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* LOGO */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .logo-box {
+      width: 48px;
+      height: 48px;
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+    }
+    .logo-box img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+    .brand-title { display: flex; flex-direction: column; }
+    .brand-name { font-size: 20px; font-weight: 900; line-height: 1.1; letter-spacing: -0.5px; }
+    .brand-name .nh { color: var(--primary); }
+    .brand-name .int { color: var(--text); }
+    .brand-sub { font-size: 10px; font-weight: 600; color: var(--text-muted); }
+
+    /* SEARCH BAR (ALIBABA STYLE) */
+    .search-container {
+      flex: 1;
+      max-width: 650px;
+    }
+    .search-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .search-tab {
+      padding: 3px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+    }
+    .search-tab.active {
+      background: var(--primary);
+      color: #fff;
+    }
+    .search-box {
+      display: flex;
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--card-bg);
+    }
+    .search-box input {
+      flex: 1;
+      border: none;
+      padding: 10px 14px;
+      font-size: 13px;
+      outline: none;
+      color: var(--text);
+      background: transparent;
+    }
+    .search-box button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 0 20px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .search-box button:hover { background: var(--primary-hover); }
+
+    .hot-keywords {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 5px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .hot-keywords span.label { font-weight: 700; }
+    .hot-keywords a { color: var(--text-muted); text-decoration: none; cursor: pointer; }
+    .hot-keywords a:hover { color: var(--primary); }
+
+    /* HEADER ACTIONS */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .icon-btn {
+      position: relative;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .icon-btn:hover { background: var(--border); }
+    .badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 900;
+      padding: 2px 5px;
+      border-radius: 10px;
+    }
+    .btn-publish {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: transform 0.1s, background 0.2s;
+    }
+    .btn-publish:hover { background: var(--primary-hover); transform: scale(1.02); }
+
+    /* CATEGORIES BAR */
+    .category-bar {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .cat-pill {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 16px;
+      background: var(--bg);
+      color: var(--text);
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: 0.2s;
+    }
+    .cat-pill:hover, .cat-pill.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .price-filter-btn {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* CONTAINER */
+    .main-container {
+      max-width: 1280px;
+      margin: 16px auto;
+      padding: 0 16px;
+    }
+
+    /* HERO 3-COLUMNS */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr 240px;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-sidebar, .hero-user-card { display: none; }
+    }
+
+    .hero-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 12px;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      position: relative;
+      height: 280px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #000;
+    }
+    .hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #fff;
+    }
+    .hero-tag {
+      background: var(--primary);
+      display: inline-block;
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 900;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      align-self: flex-start;
+    }
+    .hero-title { font-size: 24px; font-weight: 900; line-height: 1.2; margin-bottom: 8px; }
+    .hero-badge-trust {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #A7F3D0;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    /* SECTIONS */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 16px 0 10px 0;
+    }
+    .section-title {
+      font-size: 17px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title i { color: var(--primary); }
+
+    /* FLASH DEALS BAR */
+    .flash-deals-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+    .flash-deals-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .countdown {
+      background: #1E1E1E;
+      color: #FBBF24;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .deals-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .deal-mini {
+      flex: 0 0 140px;
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 8px;
+      cursor: pointer;
+      position: relative;
+    }
+    .deal-mini img { width: 100%; height: 90px; object-fit: cover; border-radius: 6px; }
+    .discount-pill {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--red);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 900;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+
+    /* PRODUCT GRID */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
+    }
+    @media (max-width: 600px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .card-img-wrap {
+      width: 100%;
+      padding-top: 100%;
+      position: relative;
+      background: #F3F4F6;
+    }
+    .card-img-wrap img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .badge-novo {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--red);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 900;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .badge-cod {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: rgba(0,0,0,0.75);
+      color: #10B981;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-top-right-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .fav-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #9CA3AF;
+    }
+    .fav-btn.active { color: var(--red); }
+
+    .card-body {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-price {
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .card-moq { font-size: 11px; color: var(--text-muted); font-weight: 400; }
+    .card-old-price {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+    .card-title {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.35;
+      margin: 4px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: var(--text);
+    }
+    .card-seller {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: auto;
+      padding-top: 4px;
+    }
+    .card-seller i.verified { color: var(--primary); }
+    .card-location { font-size: 10px; color: var(--text-muted); margin: 2px 0 6px 0; }
+    .card-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .btn-card-contact {
+      flex: 1;
+      padding: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .btn-card-buy {
+      flex: 1;
+      padding: 6px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* FLOATING BUTTON '+' */
+    .fab-publish {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 58px;
+      height: 58px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 6px 24px rgba(255, 102, 0, 0.45);
+      border: 3px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      cursor: pointer;
+      z-index: 99;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .fab-publish:hover {
+      transform: translateX(-50%) scale(1.08);
+      background: var(--primary-hover);
+    }
+
+    /* MODALS */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .modal-header {
+      background: var(--primary);
+      color: #fff;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h3 { font-size: 16px; font-weight: 900; }
+    .btn-close {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .modal-body { padding: 18px; }
+
+    /* FORM STYLES */
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--primary);
+    }
+    .preview-box {
+      width: 100%;
+      height: 140px;
+      border: 2px dashed var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-top: 6px;
+      background: var(--bg);
+      cursor: pointer;
+      position: relative;
+    }
+    .preview-box img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* FOOTER */
+    footer {
+      background: #111827;
+      color: #9CA3AF;
+      padding: 30px 16px;
+      margin-top: 40px;
+      border-top: 1px solid #1F2937;
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .trust-strip {
+      display: flex;
+      justify-content: space-around;
+      border-bottom: 1px solid #374151;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .trust-item i { font-size: 26px; color: var(--primary); margin-bottom: 6px; }
+    .trust-item h4 { color: #fff; font-size: 13px; }
+    .trust-item p { font-size: 11px; }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1E1E1E;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="live-status">
+      <div class="pulse-dot"></div>
+      <span>bolada ONLINE - 100% Online / Servidor Ativo</span>
+    </div>
+    <div class="top-links">
+      <a class="highlight" onclick="openPublishModal()">Vender no Nhonguista</a>
+      <a href="/app-debug.apk" style="color: #60A5FA; font-weight: 700;"><i class="fa fa-download"></i> Baixar App Android (.APK)</a>
+      <a>Português (MZ)</a>
+      <a onclick="openSettingsModal()"><i class="fa fa-cog"></i> Definições</a>
+  <div style="background: linear-gradient(90deg, #1E3A8A, #2563EB); color: #fff; padding: 8px 16px; font-size: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+    <div>
+      <strong><i class="fa fa-mobile-alt"></i> Aplicativo para Celular Android:</strong> Instala o NHONGUISTA no teu telemóvel para comprar e vender rápido!
+    </div>
+    <a href="/app-debug.apk" download="Nhonguista-Internacional.apk" style="background: #10B981; color: #fff; text-decoration: none; padding: 5px 14px; border-radius: 20px; font-weight: 800; font-size: 11px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+      <i class="fa fa-download"></i> Baixar APK para Celular
+    </a>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-main">
+      <!-- LOGO -->
+      <a class="brand" onclick="filterCategory('Todas')">
+        <div class="logo-box">
+          <img src="/drawable/app_icon_deal_1794260145369.jpg" alt="Logo Nhonguista">
+        </div>
+        <div class="brand-title">
+          <div class="brand-name">
+            <span class="nh">NHONGUISTA</span> <span class="int">INTERNACIONAL</span>
+          </div>
+          <div class="brand-sub">Compra e Vende em Moçambique</div>
+        </div>
+      </a>
+
+      <!-- SEARCH BAR -->
+      <div class="search-container">
+        <div class="search-tabs">
+          <button class="search-tab active" onclick="setSearchTab(this, 'produtos')">Produtos</button>
+          <button class="search-tab" onclick="setSearchTab(this, 'fornecedores')">Fornecedores</button>
+          <button class="search-tab" onclick="setSearchTab(this, 'fabricantes')">Fabricantes</button>
+        </div>
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Pesquisa produtos, fornecedores, capulanas, telemóveis..." oninput="handleSearch()">
+          <button onclick="handleSearch()"><i class="fa fa-search"></i> Pesquisar</button>
+        </div>
+        <div class="hot-keywords">
+          <span class="label">Mais procurados:</span>
+          <a onclick="quickSearch('telemóveis')">telemóveis</a> •
+          <a onclick="quickSearch('capulana')">capulana</a> •
+          <a onclick="quickSearch('mota')">mota</a> •
+          <a onclick="quickSearch('ténis')">ténis</a> •
+          <a onclick="quickSearch('painel solar')">painel solar</a> •
+          <a onclick="quickSearch('gerador')">gerador</a>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="header-actions">
+        <button class="icon-btn" onclick="openMessagesModal()" title="Mensagens">
+          <i class="fa-regular fa-comment-dots"></i>
+          <span class="badge">3</span>
+        </button>
+        <button class="icon-btn" onclick="openFavoritesModal()" title="Favoritos">
+          <i class="fa-regular fa-heart"></i>
+          <span class="badge" id="favBadge">0</span>
+        </button>
+        <button class="icon-btn" onclick="openCartModal()" title="Carrinho">
+          <i class="fa fa-shopping-cart"></i>
+          <span class="badge" id="cartBadge">0</span>
+        </button>
+        <button class="btn-publish" onclick="openPublishModal()">
+          <i class="fa fa-plus-circle"></i> + Publicar / Vender
+        </button>
+        <button class="icon-btn" onclick="openSettingsModal()" title="Definições e Criador">
+          <i class="fa fa-user"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CATEGORIES BAR -->
+  <div class="category-bar">
+    <div class="cat-pill active" onclick="filterCategory('Todas')">Todas as Categorias</div>
+    <div class="cat-pill" onclick="filterCategory('Telemóveis')">Telemóveis</div>
+    <div class="cat-pill" onclick="filterCategory('Capulanas & Beleza')">Capulanas & Beleza</div>
+    <div class="cat-pill" onclick="filterCategory('Eletrónica')">Eletrónica</div>
+    <div class="cat-pill" onclick="filterCategory('Motas & Carros')">Motas & Carros</div>
+    <div class="cat-pill" onclick="filterCategory('Moda')">Moda</div>
+    <div class="cat-pill" onclick="filterCategory('Casa & Móveis')">Casa & Móveis</div>
+    <div class="cat-pill" onclick="filterCategory('Comida & Bebida')">Comida & Bebida</div>
+    <div class="cat-pill" onclick="filterCategory('Terrenos & Casas')">Terrenos & Casas</div>
+    <div class="cat-pill" onclick="filterCategory('Serviços')">Serviços</div>
+    <div class="cat-pill" onclick="filterCategory('Empregos')">Empregos</div>
+    <div class="cat-pill" onclick="filterCategory('Agricultura')">Agricultura</div>
+    <div class="cat-pill" onclick="filterCategory('Desporto')">Desporto</div>
+
+    <button class="price-filter-btn" onclick="togglePriceFilter()">
+      <i class="fa fa-tag"></i> <span id="priceFilterLabel">Pesquisar por Preço</span>
+    </button>
+  </div>
+
+  <!-- MAIN BODY -->
+  <div class="main-container">
+
+    <!-- 3-COLUMN HERO -->
+    <div class="hero-grid">
+      <!-- Left: Categories -->
+      <div class="hero-card hero-sidebar">
+        <h4 style="font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 10px;">Mercados de Moçambique</h4>
+        <ul style="list-style: none; font-size: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <li onclick="filterCity('Maputo')" style="cursor: pointer;"><i class="fa fa-map-marker-alt" style="color: var(--primary);"></i> Maputo Central</li>
+          <li onclick="filterCity('Matola')" style="cursor: pointer;"><i class="fa fa-map-marker-alt" style="color: var(--primary);"></i> Matola & Machava</li>
+          <li onclick="filterCity('Beira')" style="cursor: pointer;"><i class="fa fa-map-marker-alt" style="color: var(--primary);"></i> Beira & Dondo</li>
+          <li onclick="filterCity('Nampula')" style="cursor: pointer;"><i class="fa fa-map-marker-alt" style="color: var(--primary);"></i> Nampula Mercado</li>
+          <li onclick="filterCity('Tete')" style="cursor: pointer;"><i class="fa fa-map-marker-alt" style="color: var(--primary);"></i> Tete & Moatize</li>
+          <li onclick="filterCity('Todas')" style="cursor: pointer; font-weight: 700; color: var(--primary);">Ver Todas as Províncias</li>
+        </ul>
+      </div>
+
+      <!-- Center: Banner -->
+      <div class="hero-banner">
+        <img src="/drawable/nhonguista_banner_1794260160007.jpg" alt="Nhonguista Banner">
+        <div class="hero-overlay">
+          <div class="hero-tag">MERCADO OFICIAL DE MOÇAMBIQUE</div>
+          <div class="hero-title">Compra e Vende em Grande<br>Direto com o Produtor</div>
+          <div class="hero-badge-trust">
+            <i class="fa fa-shield-alt"></i> 100% Pagamento na Entrega • Sem Risco para o Comprador
+          </div>
+          <div>
+            <button class="btn-publish" style="display: inline-flex;" onclick="openPublishModal()">
+              Publicar Artigo Grátis
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Welcome & Trust -->
+      <div class="hero-card hero-user-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center;">
+              <i class="fa fa-user"></i>
+            </div>
+            <div>
+              <div style="font-size: 13px; font-weight: 800;">Bem-vindo ao Nhonguista!</div>
+              <div style="font-size: 10px; color: var(--text-muted);">Negócios fechados em MT</div>
+            </div>
+          </div>
+          <div style="background: var(--bg); padding: 8px; border-radius: 6px; font-size: 11px; margin-bottom: 10px;">
+            <div style="color: var(--green); font-weight: 800; margin-bottom: 2px;"><i class="fa fa-check-circle"></i> Entrada 100% Livre</div>
+            <p style="color: var(--text-muted); font-size: 10px;">Sem taxa de entrada, sem bloqueios de M-Pesa. Pague só ao receber a encomenda!</p>
+          </div>
+        </div>
+        <button class="btn-publish" style="width: 100%; justify-content: center;" onclick="openPublishModal()">
+          <i class="fa fa-plus"></i> Publicar o que Vendes
+        </button>
+      </div>
+    </div>
+
+    <!-- FLASH DEALS (OFERTAS DO DIA) -->
+    <div class="flash-deals-box">
+      <div class="flash-deals-header">
+        <div class="section-title">
+          <i class="fa fa-bolt" style="color: var(--yellow);"></i> Ofertas do Dia • Boladas Relâmpago
+        </div>
+        <div class="countdown">
+          <i class="fa fa-clock"></i> Termina em: <span id="timer">04:32:18</span>
+        </div>
+      </div>
+      <div class="deals-scroll" id="dealsContainer"></div>
+    </div>
+
+    <!-- FEED TITLE -->
+    <div class="section-header">
+      <div class="section-title">
+        <i class="fa fa-fire"></i> <span id="feedTitle">Produtos em Destaque em Moçambique</span>
+      </div>
+      <div style="font-size: 12px; color: var(--text-muted);" id="feedCount"></div>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div class="product-grid" id="productsGrid"></div>
+
+  </div>
+
+  <!-- FLOATING ACTION BUTTON '+' -->
+  <button class="fab-publish" onclick="openPublishModal()" title="Publicar o que vendes">
+    <i class="fa fa-plus"></i>
+  </button>
+
+  <!-- MODAL: PUBLICAR O QUE VENDES -->
+  <div class="modal-overlay" id="publishModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fa fa-tag"></i> Publicar o que Vendes</h3>
+        <button class="btn-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 11px; color: var(--red); font-weight: 700; margin-bottom: 12px;">
+          * Campos com asterisco são OBRIGATÓRIOS para segurança dos compradores.
+        </p>
+
+        <form id="publishForm" onsubmit="handlePublish(event)">
+          <!-- 1. Celular -->
+          <div class="form-group">
+            <label>1. Número de Celular * (Vodacom / Tmcel / Movitel)</label>
+            <input type="tel" id="pubPhone" placeholder="Ex: 844935865 ou 821234567" required>
+          </div>
+
+          <!-- 2. Imagem -->
+          <div class="form-group">
+            <label>2. Imagem do que Vendes *</label>
+            <div class="preview-box" onclick="triggerFileInput()">
+              <img id="pubPreviewImg" src="/drawable/app_icon_deal_1794260145369.jpg" alt="Preview">
+            </div>
+            <input type="file" id="pubFileInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+            <p style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Clique no quadro acima para escolher uma foto da galeria ou use a imagem padrão de negócio.</p>
+          </div>
+
+          <!-- 3. Localização -->
+          <div class="form-group">
+            <label>3. Localização * (Província / Cidade)</label>
+            <select id="pubCity" required>
+              <option value="Maputo">Maputo</option>
+              <option value="Matola">Matola</option>
+              <option value="Beira">Beira</option>
+              <option value="Nampula">Nampula</option>
+              <option value="Tete">Tete</option>
+              <option value="Chimoio">Chimoio</option>
+              <option value="Pemba">Pemba</option>
+              <option value="Quelimane">Quelimane</option>
+            </select>
+            <input type="text" id="pubBairro" placeholder="Bairro / Rua / Mercado (ex: Polana Caniço, Zimpeto)" style="margin-top: 6px;">
+          </div>
+
+          <!-- 4. Preço em MT -->
+          <div class="form-group">
+            <label>4. Preço em MT (Meticais) *</label>
+            <input type="number" id="pubPrice" placeholder="Ex: 1500" min="1" required>
+          </div>
+
+          <!-- Campos Opcionais -->
+          <div style="border-top: 1px dashed var(--border); padding-top: 10px; margin-top: 10px;">
+            <div class="form-group">
+              <label>Nome do Produto (Opcional)</label>
+              <input type="text" id="pubTitle" placeholder="Ex: Capulana Samakaka autêntica ou Mota Haojue">
+            </div>
+            <div class="form-group">
+              <label>Categoria</label>
+              <select id="pubCategory">
+                <option value="Telemóveis">Telemóveis</option>
+                <option value="Capulanas & Beleza">Capulanas & Beleza</option>
+                <option value="Eletrónica">Eletrónica</option>
+                <option value="Motas & Carros">Motas & Carros</option>
+                <option value="Moda">Moda</option>
+                <option value="Casa & Móveis">Casa & Móveis</option>
+                <option value="Comida & Bebida">Comida & Bebida</option>
+                <option value="Terrenos & Casas">Terrenos & Casas</option>
+                <option value="Outros">Outros</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Nome do Vendedor / Loja</label>
+              <input type="text" id="pubSeller" placeholder="Ex: Lúcifer O'black">
+            </div>
+            <div class="form-group">
+              <label>WhatsApp</label>
+              <input type="tel" id="pubWhatsapp" placeholder="Ex: 844935865">
+            </div>
+            <div class="form-group">
+              <label>Descrição detalhada</label>
+              <textarea id="pubDesc" rows="3" placeholder="Estado do produto, garantia e forma de entrega."></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-publish" style="width: 100%; padding: 12px; font-size: 14px; justify-content: center;">
+            <i class="fa fa-check"></i> Publicar no Topo do Feed Imediatamente
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DETALHES DO PRODUTO -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="detTitle">Detalhe do Artigo</h3>
+        <button class="btn-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body" id="detBody"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: CHECKOUT (PAGAMENTO NA ENTREGA) -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fa fa-shopping-bag"></i> Finalizar Encomenda</h3>
+        <button class="btn-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: var(--bg); padding: 12px; border-radius: 8px; margin-bottom: 14px;">
+          <div style="font-size: 13px; font-weight: 800; color: var(--primary);">Resumo do Pedido</div>
+          <div id="checkoutSummary" style="font-size: 12px; margin-top: 4px;"></div>
+        </div>
+
+        <div class="form-group">
+          <label>Forma de Pagamento (Segurança Total)</label>
+          <div style="background: #ECFDF5; border: 2px solid #10B981; padding: 10px; border-radius: 8px; margin-bottom: 8px; cursor: pointer;">
+            <input type="radio" name="payMethod" value="Entrega" checked id="payCod">
+            <label for="payCod" style="display: inline; font-weight: 800; color: #065F46; cursor: pointer;">
+              Pagamento na Entrega (Recomendado)
+            </label>
+            <p style="font-size: 11px; color: #047857; margin-top: 2px; margin-left: 20px;">
+              Pagas apenas em dinheiro vivo ou M-Pesa quando o entregador chegar e verificares o produto!
+            </p>
+          </div>
+          <div style="background: var(--bg); border: 1px solid var(--border); padding: 10px; border-radius: 8px; cursor: pointer;">
+            <input type="radio" name="payMethod" value="M-Pesa" id="payMpesa">
+            <label for="payMpesa" style="display: inline; font-weight: 700; color: var(--text); cursor: pointer;">
+              M-Pesa Moçambique (Vodacom)
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nome Completo *</label>
+          <input type="text" id="chkName" placeholder="Ex: Mateus Langa" required>
+        </div>
+        <div class="form-group">
+          <label>Telefone para Contacto de Entrega *</label>
+          <input type="tel" id="chkPhone" placeholder="Ex: 844935865" required>
+        </div>
+        <div class="form-group">
+          <label>Província / Cidade *</label>
+          <select id="chkCity">
+            <option value="Maputo">Maputo</option>
+            <option value="Matola">Matola</option>
+            <option value="Beira">Beira</option>
+            <option value="Nampula">Nampula</option>
+            <option value="Tete">Tete</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Bairro, Rua e Ponto de Referência *</label>
+          <input type="text" id="chkAddress" placeholder="Ex: Bairro Alto Maé, Rua da Resistência nº 12" required>
+        </div>
+
+        <button class="btn-publish" style="width: 100%; padding: 12px; justify-content: center; font-size: 14px;" onclick="confirmOrder()">
+          <i class="fa fa-check-circle"></i> Confirmar Encomenda com Pagamento na Entrega
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DEFINIÇÕES & CRIADOR LÚCIFER O'BLACK -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fa fa-info-circle"></i> Definições & Sobre o Site</h3>
+        <button class="btn-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- CRÉDITOS DO CRIADOR -->
+        <div style="background: #111827; color: #fff; padding: 14px; border-radius: 10px; margin-bottom: 16px;">
+          <div style="font-size: 16px; font-weight: 900; color: #FF6600;">NHONGUISTA INTERNACIONAL</div>
+          <div style="font-size: 13px; font-weight: 700; margin-top: 4px;">Criador do site: Lúcifer O'black</div>
+          <div style="font-size: 12px; color: #10B981; font-weight: 700; margin-top: 2px;">
+            <i class="fa fa-phone"></i> Contacto Oficial: <a href="tel:844935865" style="color: #10B981; text-decoration: underline;">844935865</a>
+          </div>
+          <div style="font-size: 11px; color: #9CA3AF; margin-top: 6px;">
+            NHONGUISTA INTERNACIONAL - Criado por Lúcifer O'black. Todos os direitos reservados.
+          </div>
+        </div>
+
+        <!-- SELETOR DE TEMAS -->
+        <div class="form-group">
+          <label style="font-size: 13px; font-weight: 800;">Seletor de Temas (Muda na hora!):</label>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px;">
+            <button class="cat-pill" onclick="setTheme('orange')">🔥 Laranja Fogo (Alibaba)</button>
+            <button class="cat-pill" onclick="setTheme('green')">🌿 Verde Claro</button>
+            <button class="cat-pill" onclick="setTheme('ocean-chair')">🌊 Oceano c/ Homem Sentado</button>
+            <button class="cat-pill" onclick="setTheme('purple')">⚡ Roxo Neon</button>
+            <button class="cat-pill" onclick="setTheme('ocean')">💙 Azul Oceano</button>
+            <button class="cat-pill" onclick="toggleDarkMode()">🌓 Modo Claro / Escuro</button>
+          </div>
+        </div>
+
+        <!-- COMO FUNCIONA O PAGAMENTO NA ENTREGA -->
+        <div style="background: #ECFDF5; border: 1px solid #10B981; padding: 12px; border-radius: 8px; margin-bottom: 14px;">
+          <h4 style="color: #065F46; font-size: 13px; font-weight: 800; margin-bottom: 4px;">Como Funciona o Pagamento na Entrega?</h4>
+          <p style="font-size: 11px; color: #047857; line-height: 1.4;">
+            No Nhonguista Internacional o comprador está 100% protegido. Escolhes o artigo, fazes o pedido sem pagar nada adiantado, o estafeta entrega no teu endereço em Moçambique, e apenas após examinar a mercadoria fazes o pagamento em dinheiro ou M-Pesa.
+          </p>
+        </div>
+
+        <!-- TEXTÃO PROFISSIONAL SOBRE VANTAGENS DO SITE -->
+        <div style="background: var(--bg); padding: 12px; border-radius: 8px; font-size: 11px; line-height: 1.5; color: var(--text-muted);">
+          <h4 style="color: var(--text); font-size: 12px; font-weight: 800; margin-bottom: 6px;">Sobre o NHONGUISTA INTERNACIONAL:</h4>
+          <p style="margin-bottom: 8px;">
+            O NHONGUISTA INTERNACIONAL é o marketplace de maior relevância em Moçambique, inspirado na estrutura de comércio internacional do Alibaba, adaptado com rigor para conectar vendedores informais (nhonguistas), lojas estabelecidas e fabricantes locais ao consumidor final.
+          </p>
+          <p style="margin-bottom: 8px;">
+            A nossa plataforma elimina barreiras com entrada 100% gratuita, facilidade de contacto via WhatsApp e chamadas diretas, garantindo que comerciantes de Maputo à província de Cabo Delgado exponham os seus produtos sem intermediários especulativos.
+          </p>
+          <p>
+            Com a garantia do Pagamento na Entrega, geramos confiança mútua e fortalecemos a economia moçambicana em Meticais (MT).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="trust-strip">
+        <div class="trust-item">
+          <i class="fa fa-shield-alt"></i>
+          <h4>Pague na Entrega</h4>
+          <p>100% Protegido em Moçambique</p>
+        </div>
+        <div class="trust-item">
+          <i class="fa fa-truck"></i>
+          <h4>Entrega Rápida</h4>
+          <p>Maputo, Beira, Nampula e Tete</p>
+        </div>
+        <div class="trust-item">
+          <i class="fa fa-headset"></i>
+          <h4>Apoio Oficial</h4>
+          <p>Contacto: 844935865</p>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;">
+        <div>
+          <div style="font-size: 16px; font-weight: 900; color: #FF6600;">NHONGUISTA INTERNACIONAL</div>
+          <p style="font-size: 11px; margin-top: 4px;">Criador do site: Lúcifer O'black • Contacto: 844935865</p>
+        </div>
+        <div style="font-size: 11px;">
+          <strong>Cidades Principais:</strong> Maputo • Matola • Beira • Nampula • Tete • Chimoio
+        </div>
+      </div>
+
+      <p style="text-align: center; font-size: 11px; border-top: 1px solid #1F2937; padding-top: 14px;">
+        © 2026 NHONGUISTA INTERNACIONAL - Criado por Lúcifer O'black. Todos os direitos reservados.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const INITIAL_PRODUCTS = [
+      {
+        id: "p1",
+        title: "Capulana Samakaka & Wax Tradicional 6 Jardas (Algodão 100%)",
+        price: 1200,
+        oldPrice: 1800,
+        category: "Capulanas & Beleza",
+        city: "Maputo",
+        location: "Maputo - Mercado Central",
+        seller: "Mama Zinha Tecidos",
+        phone: "844935865",
+        img: "/drawable/product_capulana_1794260259363.jpg",
+        isDeal: true,
+        desc: "Capulana genuína de alta densidade com cores vivas e duradouras. Padrão tradicional moçambicano."
+      },
+      {
+        id: "p2",
+        title: "Smartphone 5G Quantum Pro 256GB / 8GB RAM + Fones Sem Fio",
+        price: 14500,
+        oldPrice: 19500,
+        category: "Telemóveis",
+        city: "Matola",
+        location: "Matola - Bairro da Machava",
+        seller: "MozTech Importações",
+        phone: "847890123",
+        img: "/drawable/product_smartphone_1794260259535.jpg",
+        isDeal: true,
+        desc: "Novo na caixa com carregador e auricular. Pagamento na entrega após testar o aparelho."
+      },
+      {
+        id: "p3",
+        title: "Kit Painel Solar Monocristalino 450W + Inversor 1000W",
+        price: 18500,
+        oldPrice: 24000,
+        category: "Eletrónica",
+        city: "Tete",
+        location: "Tete - Chingodzi",
+        seller: "Energia Verde MZ",
+        phone: "823456789",
+        img: "/drawable/nhonguista_banner_1794260160007.jpg",
+        isDeal: false,
+        desc: "Sistema solar completo para televisão, geleira e iluminação residencial."
+      },
+      {
+        id: "p4",
+        title: "Mota Haojue Lindy 125cc Automática 0km com Documentos",
+        price: 65000,
+        oldPrice: 78000,
+        category: "Motas & Carros",
+        city: "Nampula",
+        location: "Nampula - Av. Eduardo Mondlane",
+        seller: "Motos do Norte",
+        phone: "861234567",
+        img: "/drawable/nhonguista_banner_1794260160007.jpg",
+        isDeal: true,
+        desc: "Económica e veloz para o dia a dia e trabalho de entregas. Livrete em dia."
+      },
+      {
+        id: "p5",
+        title: "Ténis Nike Air Force 1 Original Caixa Selada",
+        price: 3200,
+        oldPrice: 4500,
+        category: "Moda",
+        city: "Beira",
+        location: "Beira - Maquinino",
+        seller: "Sneaker King",
+        phone: "849876543",
+        img: "/drawable/app_icon_deal_1794260145369.jpg",
+        isDeal: true,
+        desc: "Tamanhos do 38 ao 44 disponíveis. Couro de primeira linha."
+      },
+      {
+        id: "p6",
+        title: "Conjunto Sofá Sala L-Shape Veludo Moçambicano 6 Lugares",
+        price: 26500,
+        oldPrice: 33000,
+        category: "Casa & Móveis",
+        city: "Maputo",
+        location: "Maputo - Polana Caniço",
+        seller: "Carpintaria Polana",
+        phone: "844935865",
+        img: "/drawable/nhonguista_banner_1794260160007.jpg",
+        isDeal: false,
+        desc: "Madeira maciça de Umbila e almofadas incluídas. Entrega gratuita no Grande Maputo."
+      }
+    ];
+
+    let products = [...INITIAL_PRODUCTS];
+    let cart = [];
+    let favorites = new Set();
+    let currentCategory = "Todas";
+    let currentCity = "Todas";
+    let currentPriceFilter = null;
+    let customImgData = null;
+
+    function formatMt(v) {
+      return v.toLocaleString('pt-MZ') + " MT";
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    function renderFeed() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const filtered = products.filter(p => {
+        const matchesQuery = !q || p.title.toLowerCase().includes(q) || p.seller.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+        const matchesCat = currentCategory === "Todas" || p.category === currentCategory;
+        const matchesCity = currentCity === "Todas" || p.city === currentCity;
+        const matchesPrice = !currentPriceFilter || (p.price >= currentPriceFilter[0] && (!currentPriceFilter[1] || p.price <= currentPriceFilter[1]));
+        return matchesQuery && matchesCat && matchesCity && matchesPrice;
+      });
+
+      document.getElementById('feedCount').innerText = filtered.length + " produtos disponíveis";
+
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = filtered.map(p => {
+        const isFav = favorites.has(p.id);
+        return '<div class="product-card" onclick="openDetailModal(\'' + p.id + '\')">' +
+          '<div class="card-img-wrap">' +
+            '<img src="' + p.img + '" alt="' + p.title + '">' +
+            (p.isNew ? '<div class="badge-novo">NOVO</div>' : '') +
+            '<div class="badge-cod"><i class="fa fa-shield-alt"></i> Pague na Entrega</div>' +
+            '<button class="fav-btn ' + (isFav ? 'active' : '') + '" onclick="event.stopPropagation(); toggleFavorite(\'' + p.id + '\')">' +
+              '<i class="' + (isFav ? 'fas' : 'far') + ' fa-heart"></i>' +
+            '</button>' +
+          '</div>' +
+          '<div class="card-body">' +
+            '<div class="card-price">' + formatMt(p.price) + ' <span class="card-moq">/ 1 Unid</span></div>' +
+            (p.oldPrice ? '<div class="card-old-price">' + formatMt(p.oldPrice) + '</div>' : '') +
+            '<div class="card-title">' + p.title + '</div>' +
+            '<div class="card-seller"><i class="fa fa-check-circle verified"></i> ' + p.seller + '</div>' +
+            '<div class="card-location"><i class="fa fa-map-marker-alt"></i> ' + p.location + '</div>' +
+            '<div class="card-actions">' +
+              '<button class="btn-card-contact" onclick="event.stopPropagation(); callSeller(\'' + p.phone + '\')">Contactar</button>' +
+              '<button class="btn-card-buy" onclick="event.stopPropagation(); addToCart(\'' + p.id + '\')">Comprar</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      // Deals render
+      const deals = products.filter(p => p.isDeal);
+      document.getElementById('dealsContainer').innerHTML = deals.map(d => 
+        '<div class="deal-mini" onclick="openDetailModal(\'' + d.id + '\')">' +
+          '<div class="discount-pill">-35%</div>' +
+          '<img src="' + d.img + '">' +
+          '<div style="font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 4px;">' + d.title + '</div>' +
+          '<div style="font-size: 13px; font-weight: 900; color: var(--primary);">' + formatMt(d.price) + '</div>' +
+        '</div>'
+      ).join('');
+    }
+
+    function toggleFavorite(id) {
+      if (favorites.has(id)) {
+        favorites.delete(id);
+        showToast("Removido dos favoritos");
+      } else {
+        favorites.add(id);
+        showToast("Adicionado aos favoritos!");
+      }
+      document.getElementById('favBadge').innerText = favorites.size;
+      renderFeed();
+    }
+
+    function addToCart(id) {
+      const p = products.find(x => x.id === id);
+      if (p) {
+        cart.push(p);
+        document.getElementById('cartBadge').innerText = cart.length;
+        showToast("Adicionado ao carrinho: " + p.title);
+      }
+    }
+
+    function openCartModal() {
+      if (cart.length === 0) {
+        showToast("O carrinho está vazio. Adiciona algum produto!");
+        return;
+      }
+      openCheckoutModal();
+    }
+
+    function openCheckoutModal() {
+      const total = cart.reduce((acc, c) => acc + c.price, 0);
+      document.getElementById('checkoutSummary').innerHTML =
+        '<strong>' + cart.length + ' itens no pedido</strong><br>' +
+        'Total a Pagar na Entrega: <span style="font-size: 16px; font-weight: 900; color: var(--primary);">' + formatMt(total) + '</span>';
+      document.getElementById('checkoutModal').classList.add('open');
+    }
+
+    function confirmOrder() {
+      const name = document.getElementById('chkName').value.trim();
+      const phone = document.getElementById('chkPhone').value.trim();
+      const city = document.getElementById('chkCity').value;
+      const addr = document.getElementById('chkAddress').value.trim();
+      const method = document.querySelector('input[name="payMethod"]:checked').value;
+
+      if (!name || !phone || !addr) {
+        alert("Por favor preencha nome, telefone e endereço para a entrega.");
+        return;
+      }
+
+      alert("🎉 Encomenda Confirmada com Sucesso!\n\nCódigo: NH-" + Math.floor(100000 + Math.random()*900000) + "\nMétodo: " + method + "\nEntrega: " + city + ", " + addr + "\n\nO estafeta ligará para " + phone + ". Pague apenas quando a mercadoria chegar!");
+      cart = [];
+      document.getElementById('cartBadge').innerText = "0";
+      closeModals();
+    }
+
+    function openDetailModal(id) {
+      const p = products.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById('detTitle').innerText = p.title;
+      document.getElementById('detBody').innerHTML =
+        '<div style="width: 100%; height: 220px; border-radius: 8px; overflow: hidden; margin-bottom: 12px;">' +
+          '<img src="' + p.img + '" style="width: 100%; height: 100%; object-fit: cover;">' +
+        '</div>' +
+        '<div style="font-size: 22px; font-weight: 900; color: var(--primary);">' + formatMt(p.price) + '</div>' +
+        '<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">📍 ' + p.location + '</div>' +
+        '<div style="background: #ECFDF5; border: 1px solid #10B981; padding: 10px; border-radius: 6px; font-size: 12px; color: #047857; font-weight: 700; margin-bottom: 12px;">' +
+          '<i class="fa fa-shield-alt"></i> PAGAMENTO NA ENTREGA GARANTIDO: Não pague nada adiantado!' +
+        '</div>' +
+        '<p style="font-size: 13px; line-height: 1.4; color: var(--text); margin-bottom: 16px;">' + p.desc + '</p>' +
+        '<div style="background: var(--bg); padding: 10px; border-radius: 6px; margin-bottom: 16px;">' +
+          '<div style="font-size: 12px; font-weight: 800;">Vendedor: ' + p.seller + '</div>' +
+          '<div style="font-size: 12px; color: var(--text-muted);">Contacto: ' + p.phone + '</div>' +
+        '</div>' +
+        '<div style="display: flex; gap: 8px;">' +
+          '<button class="btn-publish" style="flex: 1; justify-content: center; background: #25D366;" onclick="window.open(\'https://wa.me/258' + p.phone + '?text=Ola%20vi%20o%20anuncio%20no%20Nhonguista:%20' + encodeURIComponent(p.title) + '\')">' +
+            '<i class="fab fa-whatsapp"></i> WhatsApp' +
+          '</button>' +
+          '<button class="btn-publish" style="flex: 1; justify-content: center;" onclick="addToCart(\'' + p.id + '\'); closeModals(); openCheckoutModal();">' +
+            'Comprar Agora' +
+          '</button>' +
+        '</div>';
+      document.getElementById('detailModal').classList.add('open');
+    }
+
+    function openPublishModal() {
+      document.getElementById('publishModal').classList.add('open');
+    }
+
+    function openSettingsModal() {
+      document.getElementById('settingsModal').classList.add('open');
+    }
+
+    function openFavoritesModal() {
+      if (favorites.size === 0) {
+        showToast("Nenhum produto marcado como favorito ainda.");
+      } else {
+        showToast(favorites.size + " produtos nos favoritos!");
+      }
+    }
+
+    function openMessagesModal() {
+      alert("💬 Mensagens Nhonguista:\n- Mama Zinha: 'Temos novas capulanas Samakaka!'\n- MozTech: 'Smartphone entregue com garantia de 1 ano!'");
+    }
+
+    function closeModals() {
+      document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+    }
+
+    function triggerFileInput() {
+      document.getElementById('pubFileInput').click();
+    }
+
+    function handleImageUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          customImgData = evt.target.result;
+          document.getElementById('pubPreviewImg').src = customImgData;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function handlePublish(e) {
+      e.preventDefault();
+      const phone = document.getElementById('pubPhone').value.trim();
+      const city = document.getElementById('pubCity').value;
+      const bairro = document.getElementById('pubBairro').value.trim();
+      const price = parseFloat(document.getElementById('pubPrice').value);
+      const title = document.getElementById('pubTitle').value.trim() || "Artigo Moçambicano Novo";
+      const cat = document.getElementById('pubCategory').value;
+      const seller = document.getElementById('pubSeller').value.trim() || "Vendedor Particular";
+      const desc = document.getElementById('pubDesc').value.trim() || "Artigo anunciado no Nhonguista Internacional.";
+
+      if (!phone || !city || isNaN(price) || price <= 0) {
+        alert("Preencha todos os 4 campos obrigatórios (Celular, Imagem, Localização e Preço em MT)!");
+        return;
+      }
+
+      const newProd = {
+        id: "p-" + Date.now(),
+        title: title,
+        price: price,
+        oldPrice: Math.round(price * 1.25),
+        category: cat,
+        city: city,
+        location: bairro ? city + " - " + bairro : city,
+        seller: seller,
+        phone: phone,
+        img: customImgData || "/drawable/app_icon_deal_1794260145369.jpg",
+        isNew: true,
+        isDeal: false,
+        desc: desc
+      };
+
+      // Prepend to top of feed
+      products.unshift(newProd);
+      closeModals();
+      showToast("Sucesso! Anúncio publicado no topo do feed.");
+      renderFeed();
+      window.scrollTo({ top: 400, behavior: 'smooth' });
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(el => {
+        el.classList.toggle('active', el.innerText.includes(cat) || (cat === 'Todas' && el.innerText.includes('Todas')));
+      });
+      document.getElementById('feedTitle').innerText = cat === 'Todas' ? 'Produtos em Destaque em Moçambique' : cat;
+      renderFeed();
+    }
+
+    function filterCity(c) {
+      currentCity = c;
+      document.getElementById('feedTitle').innerText = c === 'Todas' ? 'Produtos em Destaque em Moçambique' : 'Produtos em ' + c;
+      renderFeed();
+    }
+
+    function quickSearch(k) {
+      document.getElementById('searchInput').value = k;
+      renderFeed();
+    }
+
+    function handleSearch() {
+      renderFeed();
+    }
+
+    function setSearchTab(btn, tab) {
+      document.querySelectorAll('.search-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('searchInput').placeholder = 'Pesquisa ' + tab + ' em Moçambique...';
+    }
+
+    function togglePriceFilter() {
+      if (!currentPriceFilter) {
+        currentPriceFilter = [0, 5000];
+        document.getElementById('priceFilterLabel').innerText = "Até 5.000 MT";
+      } else if (currentPriceFilter[1] === 5000) {
+        currentPriceFilter = [5000, 20000];
+        document.getElementById('priceFilterLabel').innerText = "5k - 20k MT";
+      } else {
+        currentPriceFilter = null;
+        document.getElementById('priceFilterLabel').innerText = "Pesquisar por Preço";
+      }
+      renderFeed();
+    }
+
+    function callSeller(p) {
+      window.location.href = "tel:" + p;
+    }
+
+    function setTheme(t) {
+      if (t === 'orange') {
+        document.body.removeAttribute('data-theme');
+        document.body.style.backgroundImage = 'none';
+      } else if (t === 'green') {
+        document.body.setAttribute('data-theme', 'green');
+        document.body.style.backgroundImage = 'none';
+      } else if (t === 'purple') {
+        document.body.setAttribute('data-theme', 'purple');
+        document.body.style.backgroundImage = 'none';
+      } else if (t === 'ocean') {
+        document.body.setAttribute('data-theme', 'ocean');
+        document.body.style.backgroundImage = 'none';
+      } else if (t === 'ocean-chair') {
+        document.body.style.backgroundImage = "url('/drawable/seated_ocean_theme_1794260159588.jpg')";
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundAttachment = "fixed";
+      }
+      showToast("Tema alterado com sucesso!");
+    }
+
+    function toggleDarkMode() {
+      const isDark = document.body.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.body.removeAttribute('data-theme');
+      } else {
+        document.body.setAttribute('data-theme', 'dark');
+      }
+    }
+
+    // Init
+    renderFeed();
+  </script>
+</body>
+</html>
